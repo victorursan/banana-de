@@ -1,0 +1,37 @@
+<div class="container">
+  <div>
+    <label>isOperating: </label><input type="checkbox" [checked]="operating" (change)="operating = !operating; refreshPersonnel(operating, username)"/>
+    <br>
+    <label>username: </label> <input type="text" [value]="username" (keyup.enter)="username = $event.target.value; refreshPersonnel(operating, username)"/>
+    <ng-container *ngIf="allPersonnel$ | async as allPersonnel">
+      <ng-container *ngIf="roles$ | async as roles">
+        <ng-container *ngIf="locations$| async as locations">
+          <table style="width:100%">
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>email</th>
+              <th>role</th>
+              <th>location</th>
+            </tr>
+            <tr *ngFor="let personnel of allPersonnel">
+              <td>{{personnel.firstName}}</td>
+              <td>{{personnel.lastName}}</td>
+              <td>{{personnel.email}}</td>
+              <td>
+                <select (change)="updatePersonnelRole(personnel.id, $event.target.value)">
+                  <option *ngFor="let role of roles | keyvalue " [value]="role.key" [selected]="role.key == personnel.roleId"> {{role.value.role}} </option>
+                </select>
+              </td>
+              <td>
+                <select (change)="updatePersonnelLocation(personnel.id, $event.target.value)" [(value)]="personnel.locationId">
+                  <option *ngFor="let location of locations | keyvalue " [value]="location.key" [selected]="location.key == personnel.locationId"> {{location.value.message}} </option>
+                </select>
+              </td>
+            </tr>
+          </table>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

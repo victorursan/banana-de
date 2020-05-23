@@ -1,0 +1,8 @@
+<div class="container">
+  <div *ngIf="scanSticky$ | async as scanSticky">
+    <div>
+      <h1>{{scanSticky.message}}</h1>
+      <li *ngFor="let action of scanSticky.actions" (click)="actionSelected(action.id, scanSticky.locationId)" > {{action.message}} : {{action.state}} </li>
+    </div>
+  </div>
+</div>

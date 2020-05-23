@@ -1,0 +1,9 @@
+<div class="container">
+  <div *ngIf="allTickets$ | async as allTickets">
+    <div>
+      <li *ngFor="let ticket of allTickets"> <!--(click)="navigateToTicket(ticket.ticketId)">-->
+        <a>{{ticket.message}} -> {{ticket.state}}</a>
+      </li>
+    </div>
+  </div>
+</div>

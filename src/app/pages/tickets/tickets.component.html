@@ -1,0 +1,14 @@
+<div class="container">
+  <div *ngIf="allTickets$ | async as allTickets">
+    <div>
+      <li *ngFor="let ticket of allTickets">
+        <a>{{ticket.message}}</a>
+        <select (change)="ticketStateChanges(ticket.ticketId, $event.target.value)" [(value)]="ticket.state">
+          <option value="pending"> Pending </option>
+          <option value="acquired"> Acquired </option>
+          <option value="solved"> Solved </option>
+        </select>
+      </li>
+    </div>
+  </div>
+</div>

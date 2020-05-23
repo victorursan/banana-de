@@ -1,0 +1,34 @@
+<div class="container">
+  <ng-container *ngIf="allLocationsMap$ | async as allLocationsMap">
+    <div *ngIf="allLocations$ | async as allLocations">
+      <!-- <label>new location: <input type="text" [value]="username" (keyup.enter)="username = $event.target.value; refreshPersonnel(operating, username)"/></label> -->
+      <form (ngSubmit)="onSubmit()" #locationForm="ngForm">
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" required [(ngModel)]="newLocation.location"
+            name="location">
+        </div>
+        <div class="form-group">
+          <label for="parentLocation">Parent Location</label>
+          <select class="form-control" id="parentLocation" required [(ngModel)]="newLocation.parentLocation"
+            name="parentLocation">
+            <option *ngFor="let location of allLocations" [value]="location.id">{{location.message}}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+      <div>
+        <table style="width:100%">
+          <tr>
+            <th>Location</th>
+            <th>ParentLocation</th>
+          </tr>
+          <tr *ngFor="let location of allLocations">
+            <td>{{location.message}}</td>
+            <td>{{allLocationsMap.get(location.parentLocation).message}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</div>

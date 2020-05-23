@@ -1,0 +1,8 @@
+<div class="container">
+  <div *ngIf="ticket$ | async as ticket">
+    <div>
+      <h1>{{ticket.message}}</h1>
+      <h2>{{ticket.state}}</h2>
+    </div>
+  </div>
+</div>
