@@ -6,13 +6,13 @@ import { BackendConfig } from './backend-config';
 
 // Add here your keycloak setup infos
 const keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8080/auth',
+  url: 'http://192.168.2.109:8080/auth',
   realm: 'banana-cartchufi',
   clientId: 'cartchufi-service-fe'
 };
 
 const backendConfig: BackendConfig = {
-  url: 'http://localhost:8081/api'
+  url: 'http://192.168.2.109:8081/api'
 }
 
 export const environment = {
