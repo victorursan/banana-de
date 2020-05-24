@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BananaHttpService, ScanSticky} from '../../services';
+import { BananaHttpService, ScanSticky, ActionState} from '../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { flatMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class ScanComponent implements OnInit {
   scanSticky$: Observable<ScanSticky>;
-
+  ActionState = ActionState;
   constructor(private route: ActivatedRoute, private router: Router, private bananaHttpService: BananaHttpService) {
 
   }

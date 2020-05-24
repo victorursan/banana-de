@@ -22,7 +22,7 @@ const keycloakService: KeycloakService = new KeycloakService();
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { NgModule, DoBootstrap } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import {
   StickiesComponent,
   LocationsComponent,
   MyTicketsComponent,
+  ProfileComponent,
 } from '../../pages';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,6 +38,7 @@ import { AppAuthGuard } from 'app/app.authguard';
     StickiesComponent,
     LocationsComponent,
     MyTicketsComponent,
+    ProfileComponent,
   ],
   providers: [AppAuthGuard]
 })

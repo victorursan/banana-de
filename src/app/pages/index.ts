@@ -8,3 +8,4 @@ export * from './personnel/personnel.component';
 export * from './stickies/stickies.component';
 export * from './locations/locations.component';
 export * from './my-tickets/my-tickets.component';
+export * from './profile/profile.component';

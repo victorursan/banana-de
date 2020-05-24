@@ -10,6 +10,7 @@ import {
   LocationsComponent,
   MyTicketsComponent,
   TicketComponent,
+  ProfileComponent,
 } from '../../pages';
 import { AppAuthGuard } from '../../app.authguard';
 
@@ -63,6 +64,11 @@ export const AdminLayoutRoutes: Routes = [
     component: LocationsComponent,
     canActivate: [AppAuthGuard],
     data: { roles: ['admin'] }
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['member'] }
   }
-
 ];

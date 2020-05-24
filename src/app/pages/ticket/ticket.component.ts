@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ticket, BananaHttpService } from '../../services';
+import { Ticket, BananaHttpService, State } from '../../services';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TicketComponent implements OnInit {
   ticket$: Observable<Ticket>;
+  TicketState = State;
 
   constructor(private route: ActivatedRoute, private bananaHttpService: BananaHttpService) { }
 

@@ -1,8 +1,19 @@
-<div class="container">
-  <div *ngIf="ticket$ | async as ticket">
-    <div>
-      <h1>{{ticket.message}}</h1>
-      <h2>{{ticket.state}}</h2>
+<ng-container *ngIf="ticket$ | async as ticket">
+
+  <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3 class="card-title">{{ticket.message}}</h3>
+        </div>
+        <div class="card-body">
+          <div class="progress" [ngSwitch]="ticket.state">
+            <div *ngSwitchCase="TicketState.Pending" class="progress-bar progress-bar-striped progress-bar-animated"style="width:10%"></div>
+            <div *ngSwitchCase="TicketState.Acquired" class="progress-bar progress-bar-striped progress-bar-animated" style="width:50%"></div>
+            <div *ngSwitchCase="TicketState.Solved" class="progress-bar bg-success" style="width:100%"><a>Solved</a></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

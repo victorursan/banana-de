@@ -3,22 +3,32 @@ import { ActivatedRoute } from '@angular/router';
 import { BananaHttpService, Sticky, AddSticky, AddLocation, AddAction, Role, Location } from '../../services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-stickies',
   templateUrl: './stickies.component.html',
   styleUrls: ['./stickies.component.scss'],
+  providers: [NgbModalConfig, NgbModal]
 })
 export class StickiesComponent implements OnInit {
   allStickies$: Observable<Sticky[]>;
   locations$: Observable<Map<string, Location>>;
   roles$: Observable<Map<string, Role>>;
   newSticky: AddSticky = { message: '', actions: [{ action: '', roleId: ''}], locations: [{ location: '', parentLocation: ''}] };
-
   constructor(
     private route: ActivatedRoute,
-    private bananaHttpService: BananaHttpService
-  ) {}
+    private bananaHttpService: BananaHttpService,
+    config: NgbModalConfig,
+    private modalService: NgbModal
+  ) {
+    config.backdrop = "static";
+    config.keyboard = false;
+  }
+
+  open(content) {
+    this.modalService.open(content);
+  }
 
   ngOnInit(): void {
     this.listStickies();

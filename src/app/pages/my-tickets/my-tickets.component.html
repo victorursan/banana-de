@@ -1,9 +1,28 @@
-<div class="container">
-  <div *ngIf="allTickets$ | async as allTickets">
-    <div>
-      <li *ngFor="let ticket of allTickets"> <!--(click)="navigateToTicket(ticket.ticketId)">-->
-        <a>{{ticket.message}} -> {{ticket.state}}</a>
-      </li>
+<div class="row">
+  <div class="col-md-12 ml-auto mr-auto">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Message</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="allTickets$ | async as allTickets">
+                <tr *ngFor="let ticket of allTickets">
+                  <td>{{ ticket.ticketId }}</td>
+                  <td>{{ ticket.message }}</td>
+                  <td>{{ ticket.state }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class TicketsComponent implements OnInit {
   allTickets$: Observable<Ticket[]>;
-
+  TicketState = State;
   constructor(private bananaHttpService: BananaHttpService) {}
 
   ngOnInit(): void {

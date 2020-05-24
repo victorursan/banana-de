@@ -1,34 +1,60 @@
-<div class="container">
+<div class="row">
   <ng-container *ngIf="allLocationsMap$ | async as allLocationsMap">
-    <div *ngIf="allLocations$ | async as allLocations">
-      <!-- <label>new location: <input type="text" [value]="username" (keyup.enter)="username = $event.target.value; refreshPersonnel(operating, username)"/></label> -->
-      <form (ngSubmit)="onSubmit()" #locationForm="ngForm">
-        <div class="form-group">
-          <label for="location">Location</label>
-          <input type="text" class="form-control" id="location" required [(ngModel)]="newLocation.location"
-            name="location">
+    <ng-container *ngIf="allLocations$ | async as allLocations">
+      <div class="col-md-12 ml-auto mr-auto">
+        <div class="card">
+          <div class="card-header">
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add Location</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="onSubmit(); c();" #locationForm="ngForm">
+                  <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location" required [(ngModel)]="newLocation.location"
+                      name="location">
+                  </div>
+                  <div class="form-group">
+                    <label for="parentLocation">Parent Location</label>
+                    <select class="form-control" id="parentLocation" required [(ngModel)]="newLocation.parentLocation"
+                      name="parentLocation">
+                      <option *ngFor="let location of allLocations" [value]="location.id">{{location.message}}</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+              </div>
+            </ng-template>
+
+            <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Location</button>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Parent location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let location of allLocations">
+                    <td>{{location.id}}</td>
+                    <td>{{location.message}}</td>
+                    <td>{{allLocationsMap.get(location.parentLocation).message}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="parentLocation">Parent Location</label>
-          <select class="form-control" id="parentLocation" required [(ngModel)]="newLocation.parentLocation"
-            name="parentLocation">
-            <option *ngFor="let location of allLocations" [value]="location.id">{{location.message}}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-      </form>
-      <div>
-        <table style="width:100%">
-          <tr>
-            <th>Location</th>
-            <th>ParentLocation</th>
-          </tr>
-          <tr *ngFor="let location of allLocations">
-            <td>{{location.message}}</td>
-            <td>{{allLocationsMap.get(location.parentLocation).message}}</td>
-          </tr>
-        </table>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
 </div>

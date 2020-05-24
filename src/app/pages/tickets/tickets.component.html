@@ -1,14 +1,32 @@
-<div class="container">
-  <div *ngIf="allTickets$ | async as allTickets">
-    <div>
-      <li *ngFor="let ticket of allTickets">
-        <a>{{ticket.message}}</a>
-        <select (change)="ticketStateChanges(ticket.ticketId, $event.target.value)" [(value)]="ticket.state">
-          <option value="pending"> Pending </option>
-          <option value="acquired"> Acquired </option>
-          <option value="solved"> Solved </option>
-        </select>
-      </li>
+<div class="row">
+  <div class="col-md-12 ml-auto mr-auto">
+    <div class="card card-upgrade">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Message</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="allTickets$ | async as allTickets">
+                <tr *ngFor="let ticket of allTickets">
+                  <td>{{ ticket.ticketId }}</td>
+                  <td>{{ ticket.message }}</td>
+                  <td> <select (change)="ticketStateChanges(ticket.ticketId, $event.target.value)" [(value)]="ticket.state">
+                    <option [value]="TicketState.Pending" [selected]="TicketState.Pending == ticket.state"> Pending </option>
+                    <option [value]="TicketState.Acquired" [selected]="TicketState.Acquired == ticket.state"> Acquired </option>
+                    <option [value]="TicketState.Solved" [selected]="TicketState.Solved == ticket.state"> Solved </option>
+                  </select></td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
