@@ -17,19 +17,18 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  { path: "/home", visible: true, title: "Home", icon: "nc-bank", class: "" },
   {
-    path: "/about",
+    path: "/home",
     visible: true,
-    title: "About",
-    icon: "nc-diamond",
+    title: "Home",
+    icon: "fas fa-home",
     class: "",
   },
   {
     path: "/my-tickets",
     visible: true,
     title: "My Tickets",
-    icon: "nc-pin-3",
+    icon: "fas fa-tasks",
     class: "",
     role: ClientRoles.member,
   },
@@ -37,7 +36,7 @@ export const ROUTES: RouteInfo[] = [
     path: "/tickets",
     visible: true,
     title: "Tickets",
-    icon: "nc-bell-55",
+    icon: "fas fa-clipboard-list",
     class: "",
     role: ClientRoles.community,
   },
@@ -45,15 +44,15 @@ export const ROUTES: RouteInfo[] = [
     path: "/stickies",
     visible: true,
     title: "Stickies",
-    icon: "nc-single-02",
+    icon: "fas fa-sticky-note",
     class: "",
     role: ClientRoles.admin,
   },
   {
-    path: "/personnel",
+    path: "/team",
     visible: true,
-    title: "Personnel",
-    icon: "nc-tile-56",
+    title: "Team",
+    icon: "fas fa-users",
     class: "",
     role: ClientRoles.admin,
   },
@@ -61,7 +60,7 @@ export const ROUTES: RouteInfo[] = [
     path: "/locations",
     visible: true,
     title: "Locations",
-    icon: "nc-caps-small",
+    icon: "fas fa-building",
     class: "",
     role: ClientRoles.admin,
   },
@@ -94,6 +93,7 @@ export const ROUTES: RouteInfo[] = [
 @Component({
   moduleId: module.id,
   selector: "app-sidebar-cmp",
+  styleUrls: ["./sidebar.component.scss"],
   templateUrl: "sidebar.component.html",
 })
 export class SidebarComponent implements OnInit {

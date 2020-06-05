@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BananaHttpService, Sticky, AddSticky, AddLocation, AddAction, Role, Location } from '../../services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BananaHttpService, Sticky, AddSticky, AddLocation, AddAction, Role, Location, SelectAction } from '../../services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-stickies',
@@ -15,9 +15,16 @@ export class StickiesComponent implements OnInit {
   allStickies$: Observable<Sticky[]>;
   locations$: Observable<Map<string, Location>>;
   roles$: Observable<Map<string, Role>>;
+  selectedSticky$: Observable<Sticky>;
+
   newSticky: AddSticky = { message: '', actions: [{ action: '', roleId: ''}], locations: [{ location: '', parentLocation: ''}] };
+
+  selectedStickyId: string;
+  actionSelected: SelectAction = {actionId: '', locationId: ''};
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private bananaHttpService: BananaHttpService,
     config: NgbModalConfig,
     private modalService: NgbModal
@@ -27,7 +34,19 @@ export class StickiesComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content);
+    this.modalService.open(content, { size: 'lg', backdrop: 'static' });
+  }
+
+  createTicket() {
+    this.bananaHttpService.actionSelected(this.actionSelected)
+    .subscribe(ticket => {
+      this.router.navigate([`/ticket/${ticket.ticketId}`], {relativeTo: this.route, replaceUrl: true });
+    });
+  }
+
+  setSelectedSticky(stickyId: string): void {
+    this.selectedStickyId = stickyId;
+    this.selectedSticky$ = this.allStickies$.pipe(map(a => a.find(s => s.id == stickyId)));
   }
 
   ngOnInit(): void {
@@ -41,8 +60,10 @@ export class StickiesComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.addSticky(this.newSticky).subscribe((s) => console.log(s));
-    this.newSticky = { message: '', actions: [{ action: '', roleId: ''}], locations: [{ location: '', parentLocation: ''}] };
+    this.addSticky(this.newSticky).subscribe((s) => {
+      this.listStickies();
+      this.newSticky = { message: '', actions: [{ action: '', roleId: ''}], locations: [{ location: '', parentLocation: ''}] };
+    });
   }
 
   private addSticky(addSticky: AddSticky): Observable<Sticky> {

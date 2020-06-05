@@ -8,9 +8,9 @@
   </div>
   <ul class="nav">
     <li *ngFor="let menuItem of menuItems" routerLinkActive="active" class="{{menuItem.class}}">
-      <a [routerLink]="[menuItem.path]">
-        <i class="nc-icon {{menuItem.icon}}"></i>
-        <p>{{menuItem.title}}</p>
+      <a class="mx-auto" [routerLink]="[menuItem.path]">
+        <i class="pt-1 nc-icon icon {{menuItem.icon}}"></i>
+        <span class="mx-3 mb-2">{{menuItem.title}}</span>
       </a>
     </li>
   </ul>

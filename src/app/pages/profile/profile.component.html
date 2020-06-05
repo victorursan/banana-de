@@ -1,1 +1,84 @@
-<p>profile works!</p>
+<div class="row">
+  <ng-container *ngIf="userProfile$ | async as userProfile">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card card-user">
+        <div class="card-header">
+          <!-- <h5 class="card-title">Edit Profile</h5> -->
+        </div>
+        <div class="card-body">
+          <form>
+            <div *ngIf="userRoles.indexOf(ClientRoles.community) !== -1" class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Id</label>
+                  <input type="text" disabled class="form-control" placeholder="Id" value="{{userProfile.id}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" disabled class="form-control" placeholder="First Name" value="{{userProfile.firstName}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" disabled class="form-control" placeholder="Last Name" value="{{userProfile.lastName}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Email address</label>
+                  <input type="text" disabled class="form-control" placeholder="Email" value="{{userProfile.email}}">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="userRoles.indexOf(ClientRoles.community) !== -1" class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Role</label>
+                  <input type="text" disabled class="form-control" placeholder="Role" value="{{userProfile.role.role}}">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="userRoles.indexOf(ClientRoles.community) !== -1" class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Location</label>
+                  <input type="text" disabled class="form-control" placeholder="Location" value="{{userProfile.location.message}}">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Delete Account</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5>Are you sure you want to permanently delete your account</h5>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="d('No')" >No</button>
+              <button type="button" class="btn btn-primary" (click)="deleteAccount(); d();">Yes</button>
+            </div>
+
+          </ng-template>
+
+          <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -8,4 +8,8 @@ export interface Ticket {
   ticketId: string;
   message: string;
   state: State;
+  createdAt: Date;
+  acquiredAt?: Date;
+  solvedAt?: Date;
+  ownedBy?: string;
 }

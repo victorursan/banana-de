@@ -1,7 +1,7 @@
 <div class="row">
   <ng-container *ngIf="allStickies$ | async as allStickies">
     <ng-container *ngIf="roles$ | async as roles">
-      <ng-container *ngIf="locations$| async as locations">
+      <ng-container *ngIf="locations$ | async as locations">
         <div class="col-md-12 ml-auto mr-auto">
           <div class="card">
             <div class="card-header">
@@ -31,8 +31,8 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let location of newSticky.locations; let i = index;">
-                              <td>
-                                <i class="fa fa-trash fa-2x" (click)="deleteLocationRow(i)"></i>
+                              <td (click)="deleteLocationRow(i)">
+                                <i class="fas fa-trash fa-2x"></i>
                               </td>
                               <td>
                                 <input [value]="newSticky.locations[i].location"
@@ -55,8 +55,8 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>
-                                <i class="fa fa-plus fa-2x" (click)="addLocationRow()"></i>
+                              <td (click)="addLocationRow()">
+                                <i class="fa fa-plus fa-2x"></i>
                               </td>
                               <td></td>
                               <td></td>
@@ -77,8 +77,8 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let dynamic of newSticky.actions; let i = index;">
-                              <td>
-                                <i class="fa fa-trash fa-2x" (click)="deleteActionRow(i)"></i>
+                              <td (click)="deleteActionRow(i)">
+                                <i class="fa fa-trash fa-2x"></i>
                               </td>
                               <td>
                                 <input [value]="newSticky.actions[i].action"
@@ -95,8 +95,8 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>
-                                <i class="fa fa-plus fa-2x" (click)="addActionRow()"></i>
+                              <td (click)="addActionRow()">
+                                <i class="fa fa-plus fa-2x"></i>
                               </td>
                               <td></td>
                               <td></td>
@@ -129,23 +129,23 @@
                       <td>{{sticky.message}}</td>
                       <td>
                         <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                          <thead class="text-secondary">
-                            <tr>
-                              <th scope="col">Id</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Parent Location</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let location of sticky.locations;">
-                              <td>{{location.id}}</td>
-                              <td>{{location.message}}</td>
-                              <td>{{locations.get(location.parentLocation).message}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                          <table class="table table-striped table-bordered">
+                            <thead class="text-secondary">
+                              <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Parent Location</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let location of sticky.locations;">
+                                <td>{{location.id}}</td>
+                                <td>{{location.message}}</td>
+                                <td>{{locations.get(location.parentLocation).message}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </td>
                       <td>
                         <div class="table-responsive">
@@ -172,10 +172,8 @@
                 </table>
               </div>
             </div>
-
           </div>
         </div>
-
       </ng-container>
     </ng-container>
   </ng-container>

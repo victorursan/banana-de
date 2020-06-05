@@ -6,13 +6,13 @@ import { BackendConfig } from './backend-config';
 
 // Add here your keycloak setup infos
 const keycloakConfig: KeycloakConfig = {
-  url: 'http://sec.labs23.com/auth',
+  url: `${location.protocol}//sec.labs23.com/auth`,
   realm: 'banana-cartchufi',
   clientId: 'cartchufi-service-fe'
 };
 
 const backendConfig: BackendConfig = {
-  url: 'http://backend.labs23.com/api'
+  url: `${location.protocol}//backend.labs23.com/api`
 }
 
 export const environment = {

@@ -1,7 +1,61 @@
 <div class="row">
   <div class="col-md-12 ml-auto mr-auto">
-    <div class="card card-upgrade">
+    <div class="card">
+      <div class="card-header">
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Create ticket</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ng-container *ngIf="allStickies$ | async as allStickies">
+              <ng-container *ngIf="locations$| async as locations">
+
+
+                <select id="selectedStickyId" required [value]="selectedStickyId"
+                  (input)="setSelectedSticky($event.target.value)" name="selectedStickyId">
+                  <option hidden disabled [selected]="selectedStickyId == undefined" value></option>
+                  <option *ngFor="let sticky of allStickies" [value]="sticky.id"
+                    [selected]="selectedStickyId == sticky.id"> {{sticky.message}} </option>
+                </select>
+                <ng-container *ngIf="selectedSticky$ | async as selectedSticky">
+
+                  <form (ngSubmit)="createTicket(); c();" #ticketStickyForm="ngForm">
+
+                    <div class="form-group">
+                      <label for="locationId">Location</label>
+                      <select id="locationId" required [(ngModel)]="actionSelected.locationId" name="locationId">
+                        <option hidden disabled [selected]="actionSelected.locationId == ''" value></option>
+                        <option *ngFor="let location of selectedSticky.locations" [value]="location.id"
+                          [selected]="actionSelected.locationId == location.id"> {{location.message}} |
+                          {{locations.get(location.parentLocation).message}} </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="actionId">Action</label>
+                      <select id="actionId" required [(ngModel)]="actionSelected.actionId" name="actionId">
+                        <option hidden disabled [selected]="actionSelected.actionId == ''" value></option>
+                        <option *ngFor="let action of selectedSticky.actions" [value]="action.id"
+                          [selected]="actionSelected.actionId == action.id"> {{action.message}} </option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </form>
+                </ng-container>
+
+              </ng-container>
+            </ng-container>
+
+          </div>
+        </ng-template>
+
+        <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create Ticket</button>
+      </div>
       <div class="card-body">
+        <ng-container *ngIf="personnel$ | async as personnel">
+
         <div class="table-responsive">
           <table class="table">
             <thead class=" text-primary">
@@ -9,6 +63,10 @@
                 <th scope="col">id</th>
                 <th scope="col">Message</th>
                 <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Acquired at</th>
+                <th scope="col">Solved at</th>
+                <th scope="col">Owner</th>
               </tr>
             </thead>
             <tbody>
@@ -16,16 +74,27 @@
                 <tr *ngFor="let ticket of allTickets">
                   <td>{{ ticket.ticketId }}</td>
                   <td>{{ ticket.message }}</td>
-                  <td> <select (change)="ticketStateChanges(ticket.ticketId, $event.target.value)" [(value)]="ticket.state">
-                    <option [value]="TicketState.Pending" [selected]="TicketState.Pending == ticket.state"> Pending </option>
-                    <option [value]="TicketState.Acquired" [selected]="TicketState.Acquired == ticket.state"> Acquired </option>
-                    <option [value]="TicketState.Solved" [selected]="TicketState.Solved == ticket.state"> Solved </option>
-                  </select></td>
+                  <td> <select (change)="ticketStateChanges(ticket.ticketId, $event.target.value)"
+                      [(value)]="ticket.state">
+                      <option [value]="TicketState.Pending" [selected]="TicketState.Pending == ticket.state"> Pending
+                      </option>
+                      <option [value]="TicketState.Acquired" [selected]="TicketState.Acquired == ticket.state"> Acquired
+                      </option>
+                      <option [value]="TicketState.Solved" [selected]="TicketState.Solved == ticket.state"> Solved
+                      </option>
+                    </select></td>
+                    <td>{{ticket.createdAt | date: 'medium'  }} </td>
+                    <td>{{ticket.acquiredAt | date: 'medium'  }} </td>
+                    <td>{{ticket.solvedAt | date: 'medium'  }} </td>
+                    <td>
+                      <ng-container *ngIf="personnel.get(ticket.ownedBy) as p">{{p.username === null ?  p.email : p.username }}</ng-container>
+                    </td>
                 </tr>
               </ng-container>
             </tbody>
           </table>
         </div>
+        </ng-container>
       </div>
     </div>
   </div>

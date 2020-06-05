@@ -10,10 +10,12 @@ import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { KeycloakService } from "keycloak-angular";
 import { KeycloakProfile } from "keycloak-js";
+import { BananaHttpService } from 'app/services';
 
 @Component({
   moduleId: module.id,
   selector: "app-navbar-cmp",
+  styleUrls: ["navbar.component.scss"],
   templateUrl: "navbar.component.html",
 })
 
@@ -32,7 +34,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     location: Location,
-    private renderer: Renderer2,
     private element: ElementRef,
     private router: Router,
     private keycloakService: KeycloakService
@@ -49,6 +50,7 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
+
     this.keycloakService.isLoggedIn().then((isLogedIn) => {
       this.logedIn = isLogedIn;
     });

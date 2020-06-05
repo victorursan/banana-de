@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import {
   HomeComponent,
-  AboutComponent,
   ScanComponent,
   TicketsComponent,
   PersonnelComponent,
@@ -18,10 +17,6 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent
-  },
-  {
-    path: 'about',
-    component: AboutComponent
   },
   {
     path: 'my-tickets',
@@ -54,7 +49,7 @@ export const AdminLayoutRoutes: Routes = [
     data: { roles: ['admin'] }
   },
   {
-    path: 'personnel',
+    path: 'team',
     component: PersonnelComponent,
     canActivate: [AppAuthGuard],
     data: { roles: ['admin'] }

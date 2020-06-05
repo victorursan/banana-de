@@ -3,6 +3,7 @@ export interface Personnel {
   firstName?: string;
   lastName?: string;
   email?: string;
+  username?: string;
   locationId: string;
   roleId: string;
 }

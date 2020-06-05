@@ -15,6 +15,7 @@ import { Sticky } from './sticky';
 import { AddSticky } from './add-sticky';
 import { TicketFilter } from './ticket-filter';
 import { environment } from 'environments/environment';
+import { UserProfile } from './user-profile';
 
 @Injectable({
   providedIn: 'root',
@@ -97,6 +98,14 @@ export class BananaHttpService {
 
   addSticky(addSticky: AddSticky): Observable<Sticky> {
     return this.http.post<Sticky>(`${this.backendUrl}/stickies`, addSticky);
+  }
+
+  userProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.backendUrl}/profile`);
+  }
+
+  deleteAccount(): Observable<any> {
+    return this.http.delete(`${this.backendUrl}/profile`);
   }
 
 }

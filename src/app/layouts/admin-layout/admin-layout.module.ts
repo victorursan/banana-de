@@ -7,7 +7,6 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import {
   HomeComponent,
-  AboutComponent,
   ScanComponent,
   TicketComponent,
   TicketsComponent,
@@ -30,7 +29,6 @@ import { AppAuthGuard } from 'app/app.authguard';
   ],
   declarations: [
     HomeComponent,
-    AboutComponent,
     ScanComponent,
     TicketComponent,
     TicketsComponent,

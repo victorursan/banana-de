@@ -17,7 +17,6 @@ export class LocationsComponent implements OnInit {
   newLocation: AddLocation = { location: "", parentLocation: "" };
 
   constructor(
-    private route: ActivatedRoute,
     private bananaHttpService: BananaHttpService,
     config: NgbModalConfig,
     private modalService: NgbModal
@@ -42,7 +41,7 @@ export class LocationsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.addLocation(this.newLocation).subscribe((l) => console.log(l));
+    this.addLocation(this.newLocation).subscribe((l) => this.listLocations());
     this.newLocation = { location: "", parentLocation: "" };
   }
 

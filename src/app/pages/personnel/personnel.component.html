@@ -19,6 +19,7 @@
                       <th scope="col">Firstname</th>
                       <th scope="col">Lastname</th>
                       <th scope="col">email</th>
+                      <th scope="col">username</th>
                       <th scope="col">Role</th>
                       <th scope="col">Location</th>
                     </tr>
@@ -28,6 +29,7 @@
                       <td>{{personnel.firstName}}</td>
                       <td>{{personnel.lastName}}</td>
                       <td>{{personnel.email}}</td>
+                      <td>{{personnel.username}}</td>
                       <td>
                         <select (change)="updatePersonnelRole(personnel.id, $event.target.value)">
                           <option hidden disabled [selected]="personnel.roleId == ''" value></option>
