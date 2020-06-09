@@ -1,4 +1,4 @@
 export interface PersonnelFilter {
-  operating: boolean;
-  username?: string;
+    operating: boolean;
+    username?: string;
 }

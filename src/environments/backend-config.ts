@@ -1,3 +1,3 @@
 export interface BackendConfig {
-  url: string;
+    url: string;
 }

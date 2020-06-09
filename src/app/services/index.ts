@@ -13,3 +13,4 @@ export * from './banana-http/sticky';
 export * from './banana-http/add-sticky';
 export * from './banana-http/ticket-filter';
 export * from './banana-http/user-profile';
+export * from './telegram-login/telegram-login-data'

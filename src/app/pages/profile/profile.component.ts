@@ -1,35 +1,49 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, AfterViewInit } from "@angular/core";
 import { BananaHttpService, UserProfile } from "app/services";
 import { Observable } from "rxjs";
-import { NgbModal, NgbModalConfig } from "@ng-bootstrap/ng-bootstrap";
-import { KeycloakService } from 'keycloak-angular';
-import { ClientRoles } from 'app/sidebar/sidebar.component';
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { KeycloakService } from "keycloak-angular";
+import { ClientRoles } from "app/sidebar/sidebar.component";
+import { TelegramLoginRecv } from 'app/services/telegram-login/telegram-login-recv';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.scss"],
-  providers: [NgbModalConfig, NgbModal],
 })
 export class ProfileComponent implements OnInit {
   userProfile$: Observable<UserProfile>;
   ClientRoles = ClientRoles;
   userRoles: Array<string>;
+  modalRef: BsModalRef;
 
   constructor(
     private bananaHttpService: BananaHttpService,
-    config: NgbModalConfig,
-    private modalService: NgbModal,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private modalService: BsModalService,
+    private cookieService: CookieService
   ) {
-    config.backdrop = "static";
-    config.keyboard = false;
-    this.userRoles = this.keycloakService
-      .getUserRoles()
+    this.userRoles = this.keycloakService.getUserRoles();
+    window["loginViaTelegram"] = (loginData) => this.loginViaTelegram(loginData);
   }
 
-  open(content) {
-    this.modalService.open(content);
+
+
+  private loginViaTelegram(loginData: TelegramLoginRecv) {
+    // deleteAll(path?: string, domain?: string, secure?: boolean, sameSite?: 'Lax' | 'None' | 'Strict'): void;
+
+    console.log(loginData);
+    this.bananaHttpService
+      .addTelegramDataToUserProfile({id: loginData.id,
+        firstName: loginData.first_name,
+        lastName: loginData.last_name,
+        username: loginData.username})
+      .subscribe((u) => this.profile());
+  }
+
+  open(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   ngOnInit(): void {
@@ -37,10 +51,9 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    this.bananaHttpService.deleteAccount().subscribe(l => {
-      this.keycloakService.logout(location.origin)
+    this.bananaHttpService.deleteAccount().subscribe((l) => {
+      this.keycloakService.logout(location.origin);
     });
-
   }
 
   profile(): Observable<UserProfile> {

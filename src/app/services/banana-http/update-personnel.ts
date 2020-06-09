@@ -1,4 +1,4 @@
 export interface UpdatePersonnel {
-  newRole?: string;
-  newLocation?: string;
+    newRole?: string;
+    newLocation?: string;
 }

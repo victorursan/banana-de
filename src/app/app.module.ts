@@ -1,5 +1,4 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, DoBootstrap } from '@angular/core';
+import { NgModule, DoBootstrap, ApplicationRef, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -12,56 +11,57 @@ import { AppRoutes } from './app.routing';
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { BananaHttpService } from 'app/services';
 import { environment } from 'environments/environment';
+import {CookieService} from 'ngx-cookie-service';
 
 const keycloakService: KeycloakService = new KeycloakService();
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    KeycloakAngularModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(AppRoutes, {
-      useHash: true
-    }),
-    SidebarModule,
-    NavbarModule,
-    FooterModule,
-    ToastrModule.forRoot()
-  ],
-  providers: [
-    BananaHttpService,
-    {
-      provide: KeycloakService,
-      useValue: keycloakService,
-    }
-  ],
-  entryComponents: [AppComponent]
+    declarations: [
+        AppComponent,
+        AdminLayoutComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        KeycloakAngularModule,
+        RouterModule.forRoot(AppRoutes, {
+            useHash: true
+        }),
+        BrowserAnimationsModule,
+        SidebarModule,
+        NavbarModule,
+        FooterModule,
+        ToastrModule.forRoot()
+    ],
+    providers: [
+        BananaHttpService,
+        CookieService,
+        {
+            provide: KeycloakService,
+            useValue: keycloakService,
+        }
+    ],
+    entryComponents: [AppComponent]
 })
 export class AppModule implements DoBootstrap {
-  ngDoBootstrap(app) {
-    const { keycloakConfig } = environment;
-    keycloakService
-    .init({ config: keycloakConfig,
-      initOptions: {
-        onLoad: 'check-sso',
-        checkLoginIframe: true
-      },
-      enableBearerInterceptor: true
-    })
-    .then(() => {
-      console.log('[ngDoBootstrap] bootstrap app');
-
-      app.bootstrap(AppComponent);
-    })
-    .catch(error => console.error('[ngDoBootstrap] init Keycloak failed', error));
-  }
+    ngDoBootstrap(appRef: ApplicationRef) {
+        const { keycloakConfig } = environment;
+        keycloakService
+            .init({ config: keycloakConfig,
+                initOptions: {
+                    onLoad: 'check-sso',
+                    checkLoginIframe: true
+                },
+                enableBearerInterceptor: true
+            })
+            .then(() => {
+                appRef.bootstrap(AppComponent);
+            })
+            .catch(error => console.error('[ngDoBootstrap] init Keycloak failed', error));
+    }
 }

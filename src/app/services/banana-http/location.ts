@@ -1,5 +1,5 @@
 export interface Location {
-  id: string;
-  parentLocation: string;
-  message: string;
+    id: string;
+    parentLocation: string;
+    message: string;
 }

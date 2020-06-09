@@ -1,4 +1,4 @@
 export interface SelectAction {
-  actionId: string;
-  locationId: string;
+    actionId: string;
+    locationId: string;
 }

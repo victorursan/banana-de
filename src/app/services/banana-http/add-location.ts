@@ -1,4 +1,4 @@
 export interface AddLocation {
-  location: string;
-  parentLocation: string;
+    location: string;
+    parentLocation: string;
 }

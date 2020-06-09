@@ -10,30 +10,28 @@
       </div>
       <a class="navbar-brand">{{getTitle()}}</a>
     </div>
-    <button class="navbar-toggler" type="button" (click)="collapse()"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
-      <ul class="navbar-nav">
-        <li class="nav-item" *ngIf="!logedIn">
-          <a class="nav-link btn-rotate" (click)="doLogin()">Login</a>
+
+    <div class="btn-group" dropdown>
+
+      <a *ngIf="!logedIn" id="basic-link" class="nav-item nav-link btn-rotate" aria-controls="basic-link-dropdown" (click)="doLogin()">Login</a>
+
+      <a *ngIf="logedIn" id="basic-link" dropdownToggle class="nav-link btn-rotate"  (click)="false">
+        <i class="icon fas fa-user-circle"></i><span class="caret"></span>
+        <p>
+          <span class="d-lg-none d-md-block">Account</span>
+        </p>
+      </a>
+
+
+      <ul id="basic-link-dropdown" *dropdownMenu aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu dropdown-menu-right shadow bg-white rounded" role="menu" aria-labelledby="basic-link">
+        <li>
+          <a class="dropdown-item" routerLink="/profile">Profile</a>
         </li>
-        <li class="nav-item btn-rotate" *ngIf="logedIn" ngbDropdown placement="bottom-left">
-          <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
-            <i class="icon fas fa-user-circle"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Account</span>
-            </p>
-          </a>
-          <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu dropdown-menu-right">
-            <a ngbDropdownItem routerLink="/profile" >Profile</a>
-            <a ngbDropdownItem (click)="doLogout()" >Logout</a>
-          </div>
+        <li class="divider dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item" (click)="doLogout()">Logout</a>
         </li>
       </ul>
+
     </div>
   </div>
-</nav>

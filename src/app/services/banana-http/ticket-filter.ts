@@ -1,3 +1,3 @@
 export interface TicketFilter {
-  user: boolean;
+    user: boolean;
 }
